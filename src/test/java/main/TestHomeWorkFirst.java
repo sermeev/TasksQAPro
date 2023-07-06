@@ -1,7 +1,7 @@
 package main;
 
 import common.annotations.Driver;
-import common.enums.TypeBlockLessons;
+import common.enums.TypeSection;
 import common.exceptions.AnnotationEmptyException;
 import common.extensions.UIExtensions;
 import org.junit.jupiter.api.Test;
@@ -16,9 +16,9 @@ public class TestHomeWorkFirst {
 
     @Test
     public void test() throws AnnotationEmptyException {
-        int size = new MainPage(driver)
+        new MainPage(driver)
                 .open()
-                .getBlockLessons(TypeBlockLessons.POPULARS)
-                .getListBlockLesson().size();
+                .getCourseByDateStart(TypeSection.POPULARS,true);
+
     }
 }

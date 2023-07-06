@@ -1,6 +1,6 @@
 package common.enums;
 
-public enum TypeBlockLessons {
+public enum TypeSection {
    POPULARS("Популярные курсы"),
    SPECIALIZATIONS("Специализации"),
    RECOMMENDATIONS("Рекомендации");
@@ -11,7 +11,7 @@ public enum TypeBlockLessons {
 
     String title;
 
-    TypeBlockLessons(String title) {
+    TypeSection(String title) {
         this.title = title;
     }
 }
