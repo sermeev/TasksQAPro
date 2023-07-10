@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+
 public abstract class APage<T> extends AWebObject {
     protected String url;
 
@@ -21,6 +22,10 @@ public abstract class APage<T> extends AWebObject {
                 .as("Header should be visible")
                 .isTrue();
         return (T) this;
+    }
+
+    public static  String getUrl(){
+        return BASE_URL+(BASE_URL.endsWith(" /")?"":"/");
     }
 
     public APage(WebDriver driver) {

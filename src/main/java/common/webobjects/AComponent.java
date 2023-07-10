@@ -4,22 +4,19 @@ import common.annotations.Component;
 import common.exceptions.AnnotationEmptyException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 
 public abstract class AComponent<T> extends AWebObject<T> {
+    private final static String BASE_URL = System.getProperty("base.url");
 
-    String definedPath;
+
+    {
+        waiters.waitForElementVisible(getElement(getComponent()));
+    }
 
     public AComponent(WebDriver driver) throws AnnotationEmptyException {
         super(driver);
-        definedPath = getComponent();
-        waiters.waitForElementVisible(getElement(definedPath));
-    }
-
-    public AComponent(WebDriver driver, String postfix) throws AnnotationEmptyException{
-        super(driver);
-        definedPath = getComponent()+postfix;
-        waiters.waitForElementVisible(getElement(definedPath));
 
     }
 
@@ -27,12 +24,13 @@ public abstract class AComponent<T> extends AWebObject<T> {
         Class<? extends AComponent> classAComponent = this.getClass();
         if (classAComponent.isAnnotationPresent(Component.class)) {
             Component component = classAComponent.getAnnotation(Component.class);
-            return component.value();
+            String value = component.value();
+            return value.replace("$url",APage.getUrl());
         }
 
         throw new AnnotationEmptyException(Component.class.getName());
     }
-    protected WebElement getComponentEntity(){
-        return getElement(definedPath);
+    protected WebElement getComponentEntity() throws AnnotationEmptyException {
+        return getElement(getComponent());
     }
 }

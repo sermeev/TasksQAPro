@@ -15,7 +15,7 @@ public abstract class AWebObject<T> {
 
     public AWebObject(WebDriver driver) {
         this.driver = driver;
-        this.actions = new Actions(driver);
+        this.actions = new Actions((WebDriver) driver);
         this.waiters = new Waiters(driver);
 
         PageFactory.initElements(driver, this);

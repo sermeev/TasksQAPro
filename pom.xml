@@ -13,6 +13,7 @@
         <webdrivermanager.version>5.3.3</webdrivermanager.version>
         <selenium.java.vesion>3.141.59</selenium.java.vesion>
         <assertj.version>3.24.2</assertj.version>
+        <jsoup.version>1.16.1</jsoup.version>
         <!--plugins-->
         <surefire.plugin.vesion>2.22.2</surefire.plugin.vesion>
         <checkstyle.plugin.vesion>3.3.0</checkstyle.plugin.vesion>
@@ -43,6 +44,11 @@
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <version>${assertj.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>${jsoup.version}</version>
         </dependency>
     </dependencies>
     <profiles>

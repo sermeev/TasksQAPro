@@ -1,6 +1,7 @@
 package common.extensions;
 
 import common.annotations.Driver;
+import common.listeners.EventListener;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -13,10 +14,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import common.factory.DriverFactory;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 public class UIExtensions implements BeforeEachCallback, AfterEachCallback {
 
-    WebDriver driver;
+    EventFiringWebDriver driver;
 
     private List<Field> getFieldsByAnnotation(Class<? extends Annotation> annotation, Class<?> testClass) {
         return Arrays.stream(testClass.getFields())
@@ -27,6 +29,7 @@ public class UIExtensions implements BeforeEachCallback, AfterEachCallback {
     @Override
     public void beforeEach(ExtensionContext extensionContext) throws Exception {
         driver = new DriverFactory().getDriver();
+        driver.register(new EventListener());
         List<Field> fields = this.getFieldsByAnnotation(Driver.class, extensionContext.getTestClass().get());
         for(Field field:fields){
             AccessController.doPrivileged((PrivilegedAction<Void>)
