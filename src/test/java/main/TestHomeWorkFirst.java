@@ -2,18 +2,17 @@ package main;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import common.annotations.Driver;
-import common.enums.TypeSection;
-import common.exceptions.AnnotationEmptyException;
-import common.extensions.UIExtensions;
-import common.webobjects.APage;
-import org.junit.jupiter.api.Assertions;
+import com.otus.common.annotations.Driver;
+import com.otus.common.enums.TypeSection;
+import com.otus.common.exceptions.AnnotationEmptyException;
+import com.otus.common.extensions.UIExtensions;
+import com.otus.common.webobjects.APage;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import site.components.Label;
-import site.pages.MainPage;
+import com.otus.site.components.Label;
+import com.otus.site.pages.MainPage;
 import java.io.IOException;
 
 @ExtendWith(UIExtensions.class)
@@ -55,7 +54,7 @@ public class TestHomeWorkFirst {
     public void testClickOnLabelCourse() throws AnnotationEmptyException {
         new MainPage(driver).open();
         new Label(driver).click();
-        assertThat(driver.getCurrentUrl().equals(APage.getUrl()))
+        assertThat(driver.getCurrentUrl().equals(APage.getBaseUrl()))
                 .as("The transition to the main page is not successful")
                 .isTrue();
     }
@@ -63,7 +62,7 @@ public class TestHomeWorkFirst {
     @Test
     public void testClickByCoordinatesNotTransfer() throws AnnotationEmptyException {
         new MainPage(driver).open().moveAndClickCursor(0,0);
-        assertThat(driver.getCurrentUrl().equals(APage.getUrl()))
+        assertThat(driver.getCurrentUrl().equals(APage.getBaseUrl()))
                 .as("Transfer to another page")
                 .isTrue();
     }
