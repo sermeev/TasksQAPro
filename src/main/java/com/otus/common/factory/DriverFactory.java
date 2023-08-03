@@ -7,8 +7,8 @@ import org.openqa.selenium.support.events.EventFiringWebDriver;
 public class DriverFactory {
     private final static String BROWSER_NAME = System.getProperty("browser", "chrome");
 
-    public EventFiringWebDriver getDriver() throws BrowserNotSupportException {
-        switch (BROWSER_NAME) {
+    public EventFiringWebDriver getDriver(String browserName) throws BrowserNotSupportException {
+        switch (browserName) {
             case "chrome": {
                 return new EventFiringWebDriver(new ChromeWebDriver().newDriver());
             }

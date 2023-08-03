@@ -3,7 +3,7 @@ package com.otus.common.webobjects;
 import com.otus.common.annotations.Component;
 import com.otus.common.exceptions.AnnotationEmptyException;
 import org.openqa.selenium.WebElement;
-import com.otus.common.support.GuiceScoped;
+import com.otus.bdd.support.GuiceScoped;
 
 
 public abstract class AComponent<T> extends AWebObject<T> {

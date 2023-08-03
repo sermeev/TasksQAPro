@@ -15,7 +15,7 @@
         <assertj.version>3.24.2</assertj.version>
         <jsoup.version>1.16.1</jsoup.version>
         <cucumber.version>5.5.0</cucumber.version>
-        <juice.version>7.0.0</juice.version>
+        <juice.version>5.1.0</juice.version>
         <!--plugins-->
         <surefire.plugin.vesion>2.22.2</surefire.plugin.vesion>
         <checkstyle.plugin.vesion>3.3.0</checkstyle.plugin.vesion>

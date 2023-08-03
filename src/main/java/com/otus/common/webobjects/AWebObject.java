@@ -7,16 +7,18 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
-import com.otus.common.support.GuiceScoped;
-
+import com.otus.bdd.support.GuiceScoped;
 import java.util.List;
 
 public abstract class AWebObject<T> {
     protected WebDriver driver;
+
+    protected  GuiceScoped guiceScoped;
     protected Actions actions;
     protected Waiters waiters;
     @Inject
     public AWebObject(GuiceScoped guiceScoped) {
+        this.guiceScoped = guiceScoped;
         this.driver = guiceScoped.driver;
         this.actions = new Actions((WebDriver) driver);
         this.waiters = new Waiters(driver);

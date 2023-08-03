@@ -6,7 +6,7 @@ import com.otus.common.annotations.Path;
 import com.otus.common.exceptions.AnnotationEmptyException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import com.otus.common.support.GuiceScoped;
+import com.otus.bdd.support.GuiceScoped;
 
 
 public abstract class APage<T> extends AWebObject {

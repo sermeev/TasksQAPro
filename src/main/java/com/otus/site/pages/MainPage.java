@@ -8,8 +8,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.openqa.selenium.WebElement;
-import com.otus.common.support.GuiceScoped;
-
+import com.otus.bdd.support.GuiceScoped;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
