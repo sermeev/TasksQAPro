@@ -1,5 +1,7 @@
 package site.pages;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import common.enums.TypeSection;
 import common.webobjects.APage;
 import org.jsoup.Jsoup;
@@ -33,14 +35,16 @@ public class MainPage extends APage<MainPage> {
         List<WebElement> linksCourses = getElements(String.format(coursesInSectionLocator+ linkToPageCourseLocator, typeSection.getTitle()));
         return linksCourses;
     }
-    public WebElement getElementCourse(TypeSection typeSection, String nameCourse){
+    public void getElementCourse(TypeSection typeSection, String nameCourse){
+        WebElement element = null;
         try {
-            return  getElementsCourses(titleCourseLocator, typeSection).stream().filter((WebElement course)->course.getText().equals(nameCourse)).collect(Collectors.toList()).get(0);
+            element =  getElementsCourses(titleCourseLocator, typeSection).stream().filter((WebElement course)->course.getText().equals(nameCourse)).collect(Collectors.toList()).get(0);
         }catch (IndexOutOfBoundsException exception){
-            return null;
+            element = null;
         }
-
-
+        assertThat(element!=null)
+                .as(String.format("Course not found '%1$s' in section '%2$s'",nameCourse,TypeSection.POPULARS.getTitle()))
+                .isTrue();
 
     }
     public WebElement getElementCourse(TypeSection typeSection, int index){
@@ -60,12 +64,15 @@ public class MainPage extends APage<MainPage> {
         return date;
 
     }
-    public String getCourseByDateStart(TypeSection typeSection, boolean isBefore){
+    public void getCourseByDateStart(TypeSection typeSection, String nameCourse, boolean isBefore){
         ArrayList<LocalDate> dates = new ArrayList<>();
         List<WebElement> datesStartString = getElementsCourses(dateStartCourseLocator, typeSection);
         datesStartString.forEach(element -> dates.add(convertDateStartToLocalDate(element.getText())));
         LocalDate date = dates.stream().reduce((date1, date2)-> ((isBefore?date1.isBefore(date2):date1.isAfter(date2))?date1:date2)).get(); //date1.isAfter(date2)?date1:date2)
-        return getElementCourse(typeSection,dates.indexOf(date)+1).getText();
+
+        assertThat(nameCourse.equals(getElementCourse(typeSection,dates.indexOf(date)+1).getText()))
+                .as(String.format("Course '%1$s' in section '%2$s' not start before all",nameCourse,TypeSection.POPULARS.getTitle()))
+                .isTrue();
     }
     private int getCostCourse(String url) throws IOException {
         Document doc = Jsoup.connect(url).get();
@@ -83,7 +90,7 @@ public class MainPage extends APage<MainPage> {
         return getCostCourse(linksCourses.get(index - 1).getAttribute("href"));
     }
 
-    public String getCostCourseByPrice(TypeSection typeSection, boolean isMax)  throws IOException {
+    public void getCostCourseByPrice(TypeSection typeSection, String nameCourse, boolean isMax)  throws IOException {
         List<WebElement> linksCourses = getElementsCourses(linkToPageCourseLocator, typeSection);
         List<Integer> costs = new ArrayList<>();
         linksCourses.forEach(linksCourse->{
@@ -96,7 +103,10 @@ public class MainPage extends APage<MainPage> {
             }
         });
         int cost = costs.stream().reduce((cost1, cost2)->((isMax?cost1>cost2:cost1<cost2)?cost1:cost2)).get();
-        return getElementCourse(typeSection, costs.indexOf(cost)+1).getText();
+
+        assertThat(nameCourse.equals(getElementCourse(typeSection, costs.indexOf(cost)+1).getText()))
+                .as(String.format("Cost course '%1$s' in section '%2$s' not is minimal",nameCourse,TypeSection.POPULARS.getTitle()))
+                .isTrue();
     }
 
     public MainPage moveAndClickCursor(int x, int y){
@@ -105,5 +115,12 @@ public class MainPage extends APage<MainPage> {
                 .build()
                 .perform();
         return this;
+    }
+
+    public void checkResult(){
+        assertThat(driver.getCurrentUrl().equals(APage.getUrl()))
+                .as("Transfer to another page")
+                .isTrue();
+
     }
 }
