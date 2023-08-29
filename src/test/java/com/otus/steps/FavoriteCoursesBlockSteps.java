@@ -1,9 +1,11 @@
 package com.otus.steps;
 
-import javax.inject.Inject;
+import io.cucumber.java.ru.Если;
 
 public class FavoriteCoursesBlockSteps
 {
-    @Inject
-    private  FavoriteCourses favoriteCourses;
+    @Если("Кликнуть на {int} плитку избранного курса")
+    public void clickFavoriteCourseTile(int tileNumber){
+        ;
+    }
 }

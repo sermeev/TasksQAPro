@@ -12,7 +12,7 @@ import com.otus.bdd.support.GuiceScoped;
 public abstract class APage<T> extends AWebObject {
     protected String url;
 
-    private final static String BASE_URL = System.getProperty("base.url");
+    private final static String BASE_URL = "https://otus.ru";
 
     @FindBy(tagName = "h1")
     private WebElement headerTag;
