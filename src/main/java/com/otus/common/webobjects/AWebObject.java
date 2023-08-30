@@ -51,6 +51,6 @@ public abstract class AWebObject<T> {
     }
 
     private By byAnalyzer(String definedPath){
-        return (definedPath.startsWith("/")?By.xpath(definedPath):By.className(definedPath));
+        return (definedPath.startsWith("/")?By.xpath(definedPath):By.cssSelector(definedPath));
     }
 }

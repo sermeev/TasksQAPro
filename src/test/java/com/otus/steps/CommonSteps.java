@@ -5,7 +5,7 @@ import com.otus.bdd.support.GuiceScoped;
 import com.otus.common.exceptions.BrowserNotSupportException;
 import com.otus.common.factory.DriverFactory;
 import io.cucumber.java.ru.Пусть;
-import io.cucumber.java.ru.Тогда;
+import java.util.concurrent.TimeUnit;
 
 public class CommonSteps {
 
@@ -18,10 +18,7 @@ public class CommonSteps {
     @Пусть("Открыт браузер {string}")
     public void openBrowser(String browserName) throws BrowserNotSupportException {
         guiceScoped.driver = driverFactory.getDriver(browserName);
+        guiceScoped.driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
-    @Тогда("Откроется страница с названием вкладки")
-    public void pageTitleShouldBeSameAs()
-    {
-        guiceScoped.driver.getTitle();
-    }
+
 }
