@@ -11,4 +11,6 @@ public class GuiceScoped {
     public String nameCourse;
 
     public LocalDate startTimeCourse;
+
+    public int costCourse;
 }

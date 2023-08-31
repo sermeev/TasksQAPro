@@ -10,8 +10,11 @@ import org.openqa.selenium.NoSuchElementException;
 public class LessonPage  extends APage {
     private boolean isOldLayoutPage;
     private final String typePageSelector = ".webp";
-    private final String getNameOldLayoutPageSelector = ".course-header2__title";
-    private final String getNameNewLayoutPageLocator = "//a[@href='%s']";
+    private final String nameOldLayoutPageSelector = ".course-header2__title";
+    private final String nameNewLayoutPageLocator = "//a[@href='%s']";
+    private final String buttonFullCostLocator = "//div[text()='Полная']";
+    private final String costNewLayoutLocator = "/ancestor::div[2]/following-sibling::div";
+    private final String costOldLayoutLocator ="//div[contains(text(),  'Стоимость обучения')]/following-sibling::div/nobr";
 
     @Inject
     public LessonPage(GuiceScoped guiceScoped) {
@@ -25,11 +28,19 @@ public class LessonPage  extends APage {
     }
     private String getNameNewLayoutPageLocator(){
         String url = guiceScoped.driver.getCurrentUrl();
-        return  String.format(getNameNewLayoutPageLocator,url.substring(0,url.length()-1));
+        return  String.format(nameNewLayoutPageLocator,url.substring(0,url.length()-1));
     };
 
     public String getNameCourse(){
-        return (isOldLayoutPage?getElement(getNameOldLayoutPageSelector).getText():getElement(getNameNewLayoutPageLocator()).getText());//
+        return (isOldLayoutPage?getElement(nameOldLayoutPageSelector).getText():getElement(getNameNewLayoutPageLocator()).getText());//
     }
 
+    public void getCostCourse() {
+        if(isOldLayoutPage) {
+            guiceScoped.costCourse = Integer.parseInt(getElement(costOldLayoutLocator).getText().replaceAll("[^0-9]", ""));
+        } else {
+            getElement(buttonFullCostLocator).click();
+            guiceScoped.costCourse = Integer.parseInt(getElement(buttonFullCostLocator+costNewLayoutLocator).getText().replaceAll("[^0-9]", ""));
+        }
+    }
 }
