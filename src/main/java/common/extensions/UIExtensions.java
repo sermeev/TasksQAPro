@@ -21,7 +21,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 
-public class UIExtensions implements BeforeEachCallback, AfterEachCallback {
+public class UIExtensions implements BeforeEachCallback{
 
     EventFiringWebDriver driver;
 
@@ -54,11 +54,11 @@ public class UIExtensions implements BeforeEachCallback, AfterEachCallback {
 
     }
 
-    @Override
+    /*@Override
     public void afterEach(ExtensionContext extensionContext) throws Exception {
         if (driver != null) {
             //driver.close();
             driver.quit();
         }
-    }
+    }*/
 }
