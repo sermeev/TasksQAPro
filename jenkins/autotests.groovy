@@ -1,6 +1,6 @@
 timeout(60){
     node("maven"){
-        currentBuil.description= "BRANCH=${BRANCH}\nBASE_URL=${BASE_URL}"
+        currentBuild.description= "BRANCH=${BRANCH}\nBASE_URL=${BASE_URL}"
         stage("Checkout") {
             checkout scm
         }
@@ -10,7 +10,7 @@ timeout(60){
                 script:" mvn test -DBase.url=${BASE_URL}"
             )
             if(exitCode==1){
-                currentBild.result = 'UNSTABLE'
+                currentBuild.result = 'UNSTABLE'
             }
         }
         stage("Allure report"){
