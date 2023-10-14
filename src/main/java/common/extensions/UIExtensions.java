@@ -8,12 +8,17 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.openqa.selenium.WebDriver;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.net.MalformedURLException;
+import java.net.URI;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import common.factory.DriverFactory;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 public class UIExtensions implements BeforeEachCallback, AfterEachCallback {
@@ -29,6 +34,7 @@ public class UIExtensions implements BeforeEachCallback, AfterEachCallback {
     @Override
     public void beforeEach(ExtensionContext extensionContext) throws Exception {
         driver = new DriverFactory().getDriver();
+
         driver.register(new EventListener());
         List<Field> fields = this.getFieldsByAnnotation(Driver.class, extensionContext.getTestClass().get());
         for(Field field:fields){
@@ -51,7 +57,7 @@ public class UIExtensions implements BeforeEachCallback, AfterEachCallback {
     @Override
     public void afterEach(ExtensionContext extensionContext) throws Exception {
         if (driver != null) {
-            driver.close();
+            //driver.close();
             driver.quit();
         }
     }

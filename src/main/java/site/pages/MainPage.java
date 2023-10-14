@@ -25,7 +25,7 @@ public class MainPage extends APage<MainPage> {
     private final String coursesInSectionLocator = "//*[h2 = '%s']";
     private final String titleCourseLocator = "//h5";
     private final String linkToPageCourseLocator = titleCourseLocator+"/ancestor::a";
-    private final String costCoursesLocator = "//div[contains(text(),  'Стоимость обучения')]/following-sibling::div/nobr";
+    private final String costCoursesLocator = "//p[text()='Стоимость в рассрочку']//following-sibling::div";
     private final String costCoursesAltLocator = "//p[contains(text(),  'Полная стоимость')]/following-sibling::div";
     private final String prefixDateStartString = "С ";
 
@@ -45,7 +45,6 @@ public class MainPage extends APage<MainPage> {
         assertThat(element!=null)
                 .as(String.format("Course not found '%1$s' in section '%2$s'",nameCourse,TypeSection.POPULARS.getTitle()))
                 .isTrue();
-
     }
     public WebElement getElementCourse(TypeSection typeSection, int index){
         if(index<0) return null;
@@ -76,9 +75,6 @@ public class MainPage extends APage<MainPage> {
     }
     private int getCostCourse(String url) throws IOException {
         Document doc = Jsoup.connect(url).get();
-        boolean isSpecialization = !doc.select("main").isEmpty();
-        if(isSpecialization)
-            return -1;
         Elements costString = doc.selectXpath(costCoursesLocator);
         if(costString.isEmpty())
             return 0;

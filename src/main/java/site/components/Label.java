@@ -8,7 +8,7 @@ import common.webobjects.AComponent;
 import common.webobjects.APage;
 import org.openqa.selenium.WebDriver;
 
-@Component("//a[@href='$url']")
+@Component("//a[@href='/']")
 public class Label extends AComponent<Label> {
     public Label(WebDriver driver) throws AnnotationEmptyException {
         super(driver);
