@@ -24,7 +24,6 @@ import org.openqa.selenium.support.events.EventFiringWebDriver;
 public class UIExtensions implements BeforeEachCallback, AfterEachCallback {
 
     EventFiringWebDriver driver;
-    DriverFactory driverFactory;
 
     private List<Field> getFieldsByAnnotation(Class<? extends Annotation> annotation, Class<?> testClass) {
         return Arrays.stream(testClass.getFields())
@@ -34,8 +33,7 @@ public class UIExtensions implements BeforeEachCallback, AfterEachCallback {
 
     @Override
     public void beforeEach(ExtensionContext extensionContext) throws Exception {
-        driverFactory = new DriverFactory();
-        driver = driverFactory.getDriver();
+        driver = new DriverFactory().getDriver();
 
         driver.register(new EventListener());
         List<Field> fields = this.getFieldsByAnnotation(Driver.class, extensionContext.getTestClass().get());
@@ -58,9 +56,9 @@ public class UIExtensions implements BeforeEachCallback, AfterEachCallback {
 
     @Override
     public void afterEach(ExtensionContext extensionContext) throws Exception {
-        if (driverFactory.getDriver() != null) {
+        if (driver != null) {
             //driver.close();
-            driverFactory.getDriver().quit();
+            driver.quit();
         }
     }
 }
