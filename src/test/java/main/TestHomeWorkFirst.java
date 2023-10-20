@@ -19,7 +19,7 @@ public class TestHomeWorkFirst {
     @Driver
     public WebDriver driver;
 
-    private final String nameCourse = "Криптографическая защита информации";
+    private final String nameCourse = "DevRel";
 
     @Test
     public void testFilterByNameInSectionPopular() throws AnnotationEmptyException, IOException {
