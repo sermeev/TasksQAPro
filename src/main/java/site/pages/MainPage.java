@@ -87,6 +87,7 @@ public class MainPage extends APage<MainPage> {
     }
 
     public void getCostCourseByPrice(TypeSection typeSection, String nameCourse, boolean isMax)  throws IOException {
+        getElementCourse(typeSection,nameCourse);
         List<WebElement> linksCourses = getElementsCourses(linkToPageCourseLocator, typeSection);
         List<Integer> costs = new ArrayList<>();
         linksCourses.forEach(linksCourse->{
